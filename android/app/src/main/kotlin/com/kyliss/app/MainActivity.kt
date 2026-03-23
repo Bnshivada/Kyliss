@@ -16,10 +16,10 @@ class MainActivity: FlutterActivity() {
             if (call.method == "performScroll") {
                 val am = getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
                 if (am.isEnabled) {
-                    BlinkAccessibilityService().performScrollUp()
+                    BlinkAccessibilityService.triggerScroll()
                     result.success(null)
                 } else {
-                    result.error("UNAVAILABLE", "Servis aktif değil", null)
+                    result.error("UNAVAILABLE", "Erişilebilirlik servisi aktif değil", null)
                 }
             } else {
                 result.notImplemented()
