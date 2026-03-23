@@ -1,10 +1,12 @@
 import 'package:camera/camera.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart'; 
 
 class CameraService {
   CameraController? _controller;
   bool _isBusy = false;
+  
   final FaceDetector _faceDetector = FaceDetector(
     options: FaceDetectorOptions(
       enableClassification: true,
@@ -20,6 +22,7 @@ class CameraService {
       camera, 
       ResolutionPreset.low,
       enableAudio: false,
+      imageFormatGroup: ImageFormatGroup.nv21, 
     );
 
     await _controller?.initialize();
@@ -28,13 +31,17 @@ class CameraService {
       if (_isBusy) return;
       _isBusy = true;
 
-      final inputImage = _processCameraImage(image, camera);
-      if (inputImage != null) {
-        final faces = await _faceDetector.processImage(inputImage);
-        onFacesDetected(faces);
+      try {
+        final inputImage = _processCameraImage(image, camera);
+        if (inputImage != null) {
+          final faces = await _faceDetector.processImage(inputImage);
+          onFacesDetected(faces);
+        }
+      } catch (e) {
+        debugPrint("Kamera işleme hatası: $e");
+      } finally {
+        _isBusy = false;
       }
-      
-      _isBusy = false;
     });
   }
 
@@ -45,8 +52,11 @@ class CameraService {
     }
     final bytes = allBytes.done().buffer.asUint8List();
 
-    final imageRotation = InputImageRotationValue.fromRawValue(camera.sensorOrientation) ?? InputImageRotation.rotation0deg;
-    final imageFormat = InputImageFormatValue.fromRawValue(image.format.raw) ?? InputImageFormat.nv21;
+    final imageRotation = InputImageRotationValue.fromRawValue(camera.sensorOrientation) 
+        ?? InputImageRotation.rotation0deg;
+        
+    final imageFormat = InputImageFormatValue.fromRawValue(image.format.raw) 
+        ?? InputImageFormat.nv21;
 
     final plane = image.planes.first;
 
@@ -62,6 +72,7 @@ class CameraService {
   }
 
   void dispose() {
+    _controller?.stopImageStream();
     _controller?.dispose();
     _faceDetector.close();
   }
