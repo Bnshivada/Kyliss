@@ -1,0 +1,29 @@
+name: kyliss
+description: AI-Powered Hands-Free Reels Controller using Eye Tracking.
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  google_mlkit_face_detection: ^0.11.0
+  camera: ^0.11.0
+  permission_handler: ^11.1.0
+  flutter_accessibility_service: ^0.0.5
+  cupertino_icons: ^1.0.6
+  google_fonts: ^6.1.0
+  lottie: ^2.7.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/animations/
