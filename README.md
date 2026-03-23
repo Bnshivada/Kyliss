@@ -1,4 +1,4 @@
-# <p align="center"><img src="https://raw.githubusercontent.com/Bnshivada/Kyliss/main/assets/icon.png" width="100" alt="Kyliss Icon"></p>
+# <p align="center"><img src="https://raw.githubusercontent.com/Bnshivada/Kyliss/main/assets/icons/icon.png" width="100" alt="Kyliss Icon"></p>
 # <p align="center">👀 Kyliss: AI-Powered Hands-Free Reels Controller</p>
 
 <p align="center">
